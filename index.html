@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rowan Mamdouh — Backend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1116;
+    --surface: #161B22;
+    --surface-2: #1C222B;
+    --text: #E7ECF2;
+    --muted: #8A96A3;
+    --accent: #56D6B0;
+    --accent-soft: rgba(86,214,176,0.12);
+    --amber: #E8A94C;
+    --border: #262D38;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #F7F5F0;
+      --surface: #FFFFFF;
+      --surface-2: #F0EDE6;
+      --text: #1B1F26;
+      --muted: #666F7A;
+      --border: #E2DED4;
+      --accent-soft: rgba(15,120,95,0.10);
+      --accent: #0F785F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1116; --surface:#161B22; --surface-2:#1C222B; --text:#E7ECF2;
+    --muted:#8A96A3; --accent:#56D6B0; --accent-soft:rgba(86,214,176,0.12);
+    --amber:#E8A94C; --border:#262D38;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  header.top {
+    position: sticky; top: env(safe-area-inset-top, 0px);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+  }
+  nav { display:flex; align-items:center; justify-content:space-between; padding: 16px 24px; max-width:760px; margin:0 auto; }
+  nav .name { font-weight:600; font-size:0.95rem; }
+  nav ul { list-style:none; display:flex; gap:20px; }
+  nav a { color: var(--muted); font-size:0.85rem; }
+  nav a:hover { color: var(--text); text-decoration:none; }
+
+  .hero { padding: 72px 0 56px; }
+  .hero .role { color: var(--accent); font-size: 0.9rem; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); font-weight:700; letter-spacing:-0.01em; margin-bottom: 18px; }
+  .hero p.summary { color: var(--muted); font-size: 1.05rem; max-width: 62ch; margin-bottom: 24px; }
+  .hero .meta { display:flex; flex-wrap:wrap; gap: 8px 18px; color: var(--muted); font-size:0.85rem; }
+  .hero .meta a { color: var(--muted); }
+  .hero .meta a:hover { color: var(--accent); }
+
+  section { padding: 44px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 1.35rem; font-weight:600; margin-bottom: 22px; }
+
+  p.lead { color: var(--muted); max-width: 68ch; }
+
+  .skillgrid { display:grid; grid-template-columns: 140px 1fr; gap: 10px 20px; }
+  .skillgrid dt { color: var(--muted); font-size:0.82rem; padding-top:2px; }
+  .skillgrid dd { display:flex; flex-wrap:wrap; gap:6px; }
+  .tag {
+    font-family:'JetBrains Mono', monospace; font-size:0.76rem;
+    background: var(--surface); border:1px solid var(--border);
+    padding: 3px 9px; border-radius: 4px; color: var(--text);
+  }
+
+  .job { display:grid; grid-template-columns: 150px 1fr; gap: 20px; }
+  .job .when { color: var(--muted); font-size:0.82rem; padding-top:2px; }
+  .job .role { font-weight:600; margin-bottom:2px; }
+  .job .org { color: var(--accent); font-size:0.9rem; margin-bottom: 10px; }
+  .job ul { padding-left: 18px; color: var(--muted); font-size:0.94rem; }
+  .job li { margin-bottom:6px; }
+
+  .project { border-left: 2px solid var(--border); padding: 4px 0 4px 22px; margin-bottom: 34px; position:relative; }
+  .project:last-child { margin-bottom:0; }
+  .project::before {
+    content:''; position:absolute; left:-5px; top:8px; width:8px; height:8px;
+    border-radius:50%; background: var(--accent);
+  }
+  .project h3 { font-size:1.05rem; font-weight:600; margin-bottom:6px; }
+  .project .stack { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+  .project ul { padding-left:18px; color: var(--muted); font-size:0.94rem; }
+  .project li { margin-bottom:6px; }
+  .project a.repo { font-size:0.82rem; font-family:'JetBrains Mono',monospace; }
+
+  .cols { display:grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .edu .degree { font-weight:600; margin-bottom:2px; }
+  .edu .school { color: var(--accent); font-size:0.92rem; margin-bottom:4px; }
+  .edu .when { color: var(--muted); font-size:0.82rem; }
+
+  ul.plain { list-style:none; color: var(--muted); font-size:0.92rem; }
+  ul.plain li { margin-bottom:10px; padding-left:16px; position:relative; }
+  ul.plain li::before { content:'—'; position:absolute; left:0; color: var(--border); }
+  ul.plain b { color: var(--text); font-weight:600; }
+
+  .langs { display:flex; gap:28px; flex-wrap:wrap; }
+  .langs div { font-size:0.92rem; }
+  .langs span { display:block; color: var(--muted); font-size:0.8rem; margin-top:2px; }
+
+  footer { padding: 48px 0 64px; border-top:1px solid var(--border); }
+  footer h2 { margin-bottom:12px; }
+  footer p.lead { margin-bottom: 22px; }
+  .contactrow { display:flex; flex-wrap:wrap; gap:10px 24px; font-size:0.94rem; }
+  .contactrow a { color: var(--text); }
+  .contactrow a:hover { color: var(--accent); }
+  .foot-note { margin-top:40px; color: var(--muted); font-size:0.78rem; }
+
+  @media (max-width: 620px) {
+    nav ul { gap: 12px; }
+    nav ul li:nth-child(n+4) { display:none; }
+    .skillgrid, .job { grid-template-columns: 1fr; gap:6px; }
+    .job .when { margin-bottom:4px; }
+    .cols { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav>
+    <span class="name">Rowan Mamdouh</span>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="role mono">Junior Backend Developer · Node.js · Java · REST APIs</div>
+    <h1>Rowan Mamdouh</h1>
+    <p class="summary">Computer Science graduate building backend and full-stack systems with Java, Node.js, Express, and MongoDB/MySQL — grounded in OOP, SOLID principles, and data structures, with hands-on API and database work from internship and independent projects.</p>
+    <div class="meta mono">
+      <span>Alexandria, Egypt</span>
+      <a href="mailto:rowan5090@gmail.com">rowan5090@gmail.com</a>
+      <a href="tel:+201284099025">+20 128 409 9025</a>
+      <a href="https://github.com/rowanMamdouh50" target="_blank" rel="noopener">github.com/rowanMamdouh50</a>
+      <a href="https://www.linkedin.com/in/rowan-mamdouh/" target="_blank" rel="noopener">linkedin.com/in/rowan-mamdouh</a>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Technical skills</h2>
+    <dl class="skillgrid">
+      <dt>Languages</dt>
+      <dd><span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">C++</span><span class="tag">SQL</span></dd>
+      <dt>Backend</dt>
+      <dd><span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">REST APIs</span><span class="tag">JWT</span></dd>
+      <dt>MERN Stack</dt>
+      <dd><span class="tag">MongoDB</span><span class="tag">Express.js</span><span class="tag">React.js</span><span class="tag">Node.js</span></dd>
+      <dt>Databases</dt>
+      <dd><span class="tag">MongoDB</span><span class="tag">MySQL</span><span class="tag">NoSQL</span><span class="tag">JDBC</span></dd>
+      <dt>Software Eng.</dt>
+      <dd><span class="tag">OOP</span><span class="tag">SOLID</span><span class="tag">Design Patterns</span><span class="tag">DSA</span></dd>
+      <dt>Tools</dt>
+      <dd><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">VS Code</span><span class="tag">Wireshark</span></dd>
+      <dt>Cloud &amp; Network</dt>
+      <dd><span class="tag">AWS EC2</span><span class="tag">S3</span><span class="tag">IAM</span><span class="tag">Routing &amp; Switching</span></dd>
+    </dl>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="job">
+      <div class="when mono">Jul – Aug 2026</div>
+      <div>
+        <div class="role">Backend Developer Intern</div>
+        <div class="org">FlyRank · Node.js</div>
+        <ul>
+          <li>Developed and modified backend functionality using Node.js based on assigned development tasks.</li>
+          <li>Worked with RESTful APIs, backend logic, and database operations to support application features.</li>
+          <li>Tested, debugged, and optimized assigned backend tasks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="project">
+      <h3>RoadNa — AI Travel &amp; Events Backend</h3>
+      <div class="stack">
+        <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">MongoDB</span><span class="tag">React.js</span><span class="tag">JWT</span>
+      </div>
+      <ul>
+        <li>Built full-stack REST APIs and backend services for trip, event, and booking management, with CRUD functionality and React.js integration.</li>
+        <li>Implemented JWT authentication, role-based authorization, and input validation for secure API access.</li>
+        <li>Integrated an AI-driven recommendation concept for personalized trip and event discovery.</li>
+        <li>Designed and optimized MongoDB schemas with indexing and caching, cutting unnecessary API/DB traffic by ~20%.</li>
+      </ul>
+      <a class="repo" href="https://github.com/rowanMamdouh50" target="_blank" rel="noopener">→ view on GitHub</a>
+    </div>
+
+    <div class="project">
+      <h3>Restaurant Management &amp; Design Patterns System</h3>
+      <div class="stack">
+        <span class="tag">Java</span><span class="tag">Java Swing</span><span class="tag">MySQL</span><span class="tag">JDBC</span>
+      </div>
+      <ul>
+        <li>Built a Java ordering application with customization, extras management, and dynamic pricing.</li>
+        <li>Integrated MySQL via JDBC using parameterized queries for persistent, real-time data storage.</li>
+        <li>Applied OOP/SOLID principles and Factory, Builder, Decorator, Singleton, and Observer patterns for a modular architecture.</li>
+      </ul>
+      <a class="repo" href="https://github.com/rowanMamdouh50" target="_blank" rel="noopener">→ view on GitHub</a>
+    </div>
+
+    <div class="project">
+      <h3>Car Rental Management System</h3>
+      <div class="stack">
+        <span class="tag">Java</span><span class="tag">OOP</span><span class="tag">Generics</span>
+      </div>
+      <ul>
+        <li>Built a Java console app for rental management using interface-based abstraction for cars and customers.</li>
+        <li>Applied inheritance and polymorphism, extending a base <code class="mono">Car</code> class into <code class="mono">LuxuryCar</code> without touching shared code.</li>
+        <li>Implemented add, rent, return, and search operations, plus tax/insurance calculations via generic utilities.</li>
+      </ul>
+      <a class="repo" href="https://github.com/rowanMamdouh50" target="_blank" rel="noopener">→ view on GitHub</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="cols">
+      <div class="edu">
+        <h2>Education</h2>
+        <div class="degree">B.Sc. Computer Science</div>
+        <div class="school">Egyptian E-Learning University</div>
+        <div class="when mono">2022 – 2026 · CGPA 3.31/4.0</div>
+      </div>
+      <div>
+        <h2>Languages</h2>
+        <div class="langs">
+          <div>English<span>B2</span></div>
+          <div>German<span>A1</span></div>
+          <div>French<span>A1</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Certifications &amp; activities</h2>
+    <ul class="plain">
+      <li><b>AWS Certified Cloud Practitioner</b> — 2024</li>
+      <li><b>Microsoft SC-900</b> — 2024</li>
+      <li><b>CCNA</b> — 2024</li>
+      <li><b>Linux Foundations</b></li>
+      <li><b>ECPC Participant, 2023</b> — represented university in competitive programming, solving algorithmic challenges in a team setting.</li>
+      <li><b>PR Member, YLY Volunteer</b> — Aug 2025 to Jul 2026, supported public-relations activities for the organization.</li>
+    </ul>
+  </section>
+
+  <footer id="contact">
+    <h2>Get in touch</h2>
+    <p class="lead">Open to junior backend and full-stack roles — happy to talk about any of the projects above.</p>
+    <div class="contactrow mono">
+      <a href="mailto:rowan5090@gmail.com">rowan5090@gmail.com</a>
+      <a href="tel:+201284099025">+20 128 409 9025</a>
+      <a href="https://github.com/rowanMamdouh50" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/rowan-mamdouh/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <p class="foot-note">Alexandria, Egypt</p>
+  </footer>
+
+</main>
+</body>
+</html>
